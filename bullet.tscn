@@ -1,0 +1,22 @@
+[gd_scene load_steps=3 format=3 uid="uid://c7mrn2g7uh38u"]
+
+[ext_resource type="Script" uid="uid://cwajfkhra7cen" path="res://Scripts/bullet.gd" id="1_v7oki"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ig7tw"]
+size = Vector2(12, 13)
+
+[node name="bullet" type="Node2D"]
+
+[node name="CharacterBody2D" type="CharacterBody2D" parent="."]
+collision_layer = 2
+collision_mask = 2
+script = ExtResource("1_v7oki")
+
+[node name="ColorRect" type="ColorRect" parent="CharacterBody2D"]
+offset_right = 12.0
+offset_bottom = 13.0
+color = Color(0.689433, 0.0706755, 0.269361, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
+position = Vector2(6, 6.5)
+shape = SubResource("RectangleShape2D_ig7tw")
