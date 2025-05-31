@@ -1,0 +1,110 @@
+[gd_scene load_steps=8 format=3 uid="uid://coxou7vml6470"]
+
+[ext_resource type="Script" uid="uid://bjrplesfovwg0" path="res://Scripts/main.gd" id="1_7mycd"]
+[ext_resource type="PackedScene" uid="uid://u5ddsjsiw0mn" path="res://player1.tscn" id="1_ig7tw"]
+[ext_resource type="Texture2D" uid="uid://bklt1cjr43cpx" path="res://export202505281720230450.jpg" id="2_lquwl"]
+[ext_resource type="PackedScene" uid="uid://d3y72s0jmrt70" path="res://salchicha.tscn" id="4_1bvp3"]
+[ext_resource type="FontFile" uid="uid://cfcwslq6gfn6i" path="res://font/DamingaMedium_PERSONAL_USE_ONLY.otf" id="5_7mycd"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_h2yge"]
+size = Vector2(9.17929, 20.2509)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1bvp3"]
+size = Vector2(0.891617, 20)
+
+[node name="main" type="Node2D"]
+script = ExtResource("1_7mycd")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_left = -2.0
+offset_top = 1.0
+offset_right = 59.0
+offset_bottom = 101.0
+scale = Vector2(13.1753, 4.9815)
+color = Color(0.0505108, 0.0505108, 0.0505108, 1)
+
+[node name="TextureRect" type="TextureRect" parent="ColorRect"]
+layout_mode = 0
+offset_top = -122.0
+offset_right = 688.0
+offset_bottom = 1552.0
+scale = Vector2(0.0886764, 0.163207)
+texture = ExtResource("2_lquwl")
+expand_mode = 3
+
+[node name="CharacterBody2D" parent="." instance=ExtResource("1_ig7tw")]
+position = Vector2(383, 451)
+scale = Vector2(1.84803, 1.72679)
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 1.048
+autostart = true
+
+[node name="limits" type="Node2D" parent="."]
+
+[node name="leftlimit" type="StaticBody2D" parent="limits"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="limits/leftlimit"]
+position = Vector2(5.89586, 413.115)
+scale = Vector2(0.676335, 40.7771)
+shape = SubResource("RectangleShape2D_h2yge")
+
+[node name="rightlimit" type="StaticBody2D" parent="limits"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="limits/rightlimit"]
+position = Vector2(803.545, 250)
+rotation = 3.14159
+scale = Vector2(5.70903, -24.946)
+shape = SubResource("RectangleShape2D_1bvp3")
+
+[node name="salchicha" parent="." instance=ExtResource("4_1bvp3")]
+
+[node name="hub" type="Node2D" parent="."]
+
+[node name="puntos" type="Label" parent="hub"]
+offset_left = 508.0
+offset_top = 17.0
+offset_right = 548.0
+offset_bottom = 40.0
+scale = Vector2(4.12, 2.8)
+theme_override_colors/font_color = Color(0.906953, 0.885204, 0.957207, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("5_7mycd")
+theme_override_font_sizes/font_size = 10
+text = "PUNTOS"
+
+[node name="puntosValor" type="Label" parent="hub"]
+offset_left = 677.0
+offset_top = 8.00002
+offset_right = 717.0
+offset_bottom = 31.0
+scale = Vector2(3.9552, 3.35451)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 9
+text = ":0"
+
+[node name="energia" type="Label" parent="hub"]
+offset_left = 509.0
+offset_top = 41.0
+offset_right = 549.0
+offset_bottom = 64.0
+scale = Vector2(3.9552, 3.35451)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 9
+text = "ENERGIA"
+
+[node name="puntosEnergia" type="Label" parent="hub"]
+offset_left = 677.0
+offset_top = 44.0
+offset_right = 717.0
+offset_bottom = 67.0
+scale = Vector2(3.9552, 3.35451)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 9
+text = ":0"
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

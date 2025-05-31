@@ -1,22 +1,93 @@
-[gd_scene load_steps=4 format=3 uid="uid://u5ddsjsiw0mn"]
+[gd_scene load_steps=11 format=3 uid="uid://u5ddsjsiw0mn"]
 
-[ext_resource type="Texture2D" uid="uid://gxoobp7mvjfc" path="res://Assets/Sprites/sprite.png" id="1_ng0wg"]
 [ext_resource type="Script" uid="uid://b1ytjn6awcjm5" path="res://Scripts/player_1.gd" id="1_pqb02"]
+[ext_resource type="Texture2D" uid="uid://d4mtxwlb8urjh" path="res://Assets/Sprites/IMG-20250524-WA0224 (1).png" id="2_pqb02"]
+[ext_resource type="AudioStream" uid="uid://8gwbq7vjsdf3" path="res://music/misil.mp3" id="3_3pafw"]
+[ext_resource type="AudioStream" uid="uid://nx2chatt7ri3" path="res://music/impact.mp3" id="4_3odsw"]
+[ext_resource type="Texture2D" uid="uid://bfg2udt3p4vmq" path="res://1000862493-01.png" id="5_3odsw"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3odsw"]
+size = Vector2(49, 35)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pqb02"]
-size = Vector2(32.9158, 22.0623)
+size = Vector2(31.957, 43.1218)
+
+[sub_resource type="Animation" id="Animation_bjfdx"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:energy")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_woueq"]
+resource_name = "crash"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:energy")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.21105, 0.608291, 0.708578, 0.86181, 0.998523),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 5.58, 2.13, 5.88, 2.16, 0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_hfcs4"]
+_data = {
+&"RESET": SubResource("Animation_bjfdx"),
+&"crash": SubResource("Animation_woueq")
+}
 
 [node name="CharacterBody2D" type="CharacterBody2D"]
 script = ExtResource("1_pqb02")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(5.5, -6.75)
-scale = Vector2(0.822581, 0.614286)
-texture = ExtResource("1_ng0wg")
-region_enabled = true
-region_rect = Rect2(38, 530, 62, 35)
+light_mask = 16
+visibility_layer = 16
+position = Vector2(5, -12)
+scale = Vector2(0.0651239, 0.0604748)
+texture = ExtResource("2_pqb02")
+
+[node name="Area2D" type="Area2D" parent="Sprite2D" groups=["player"]]
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Sprite2D/Area2D"]
+position = Vector2(7.67767, -8.26791)
+scale = Vector2(15.3553, 16.5358)
+shape = SubResource("RectangleShape2D_3odsw")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(5.25, -7)
+position = Vector2(5, -12.5)
 scale = Vector2(1.5646, 0.997175)
 shape = SubResource("RectangleShape2D_pqb02")
+
+[node name="sounds" type="Node2D" parent="."]
+
+[node name="misil" type="AudioStreamPlayer2D" parent="sounds"]
+stream = ExtResource("3_3pafw")
+volume_db = -13.42
+
+[node name="impact" type="AudioStreamPlayer2D" parent="sounds"]
+stream = ExtResource("4_3odsw")
+volume_db = -6.71
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+energy = 0.0
+range_item_cull_mask = 16
+texture = ExtResource("5_3odsw")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="PointLight2D"]
+libraries = {
+&"": SubResource("AnimationLibrary_hfcs4")
+}
+
+[connection signal="area_entered" from="Sprite2D/Area2D" to="." method="_on_area_2d_area_entered"]

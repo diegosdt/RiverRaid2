@@ -1,7 +1,7 @@
 extends CharacterBody2D
 
 # Velocidad de movimiento
-var pixeles_por_metro: int = 24
+var pixeles_por_metro: int = 70
 var direccion: Vector2 = Vector2.ZERO
 var velocidad: Vector2 = Vector2.ZERO
 var rapidez: float = 3 * pixeles_por_metro
@@ -38,11 +38,31 @@ func shoot():
 	if readyToShoot:
 		var bullet = pre_bullet.instantiate()
 		get_parent().call_deferred("add_child", bullet)
-		bullet.position.x = global_position.x
-		bullet.position.y = global_position.y
+		bullet.position.x = global_position.x +8
+		bullet.position.y = global_position.y -85
 		readyToShoot = false
-		await get_tree().create_timer(1.0).timeout
+		$sounds/misil.play()
+		await get_tree().create_timer(0.3).timeout
 		readyToShoot = true
 			
+func _on_area_2d_area_entered(area: Area2D):
+	print("Colisión detectada con:", area.name)  # Te ayudará a ver si el nodo correcto está colisionando
+	if area.is_in_group("salchicha"):
+		print("salchicha crash")
+		$sounds/impact.play()
+		Global.energia -= 20
+		$PointLight2D/AnimationPlayer.play("crash")
+	if Global.energia < 1:
+		get_tree().change_scene_to_file("res://Scenes/gameOver.tscn")
 		
+	if Global.puntos > 100:
+			get_tree().change_scene_to_file("res://Scenes/Finished.tscn")
+		
+		
+
+	
+	
+	
+
+	
 	

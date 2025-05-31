@@ -1,22 +1,48 @@
-[gd_scene load_steps=3 format=3 uid="uid://c7mrn2g7uh38u"]
+[gd_scene load_steps=5 format=3 uid="uid://c7mrn2g7uh38u"]
 
 [ext_resource type="Script" uid="uid://cwajfkhra7cen" path="res://Scripts/bullet.gd" id="1_v7oki"]
+[ext_resource type="Texture2D" uid="uid://b5574nnbkuxl8" path="res://Assets/Sprites/misil1.png" id="2_v8qja"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_ig7tw"]
-size = Vector2(12, 13)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_v8qja"]
+size = Vector2(44.3473, 57.9653)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_v7oki"]
+size = Vector2(59.2704, 85.8723)
 
 [node name="bullet" type="Node2D"]
 
 [node name="CharacterBody2D" type="CharacterBody2D" parent="."]
+scale = Vector2(0.248042, 0.879837)
 collision_layer = 2
 collision_mask = 2
 script = ExtResource("1_v7oki")
 
 [node name="ColorRect" type="ColorRect" parent="CharacterBody2D"]
-offset_right = 12.0
+offset_left = 4.03158
+offset_right = 16.0316
 offset_bottom = 13.0
+scale = Vector2(0.275856, 0.935627)
 color = Color(0.689433, 0.0706755, 0.269361, 1)
 
+[node name="TextureRect" type="TextureRect" parent="CharacterBody2D/ColorRect"]
+layout_mode = 0
+offset_left = -248.451
+offset_top = -18.2216
+offset_right = 886.549
+offset_bottom = 1114.78
+rotation = -0.00121159
+scale = Vector2(0.466532, 0.0865394)
+texture = ExtResource("2_v8qja")
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
-position = Vector2(6, 6.5)
-shape = SubResource("RectangleShape2D_ig7tw")
+position = Vector2(6.04736, 16.4803)
+shape = SubResource("RectangleShape2D_v8qja")
+
+[node name="Area2D" type="Area2D" parent="CharacterBody2D" groups=["bullet"]]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D/Area2D"]
+position = Vector2(6.04736, 16.4803)
+scale = Vector2(0.74822, 0.675017)
+shape = SubResource("RectangleShape2D_v7oki")
+
+[connection signal="area_entered" from="CharacterBody2D/Area2D" to="CharacterBody2D" method="_on_area_2d_area_entered"]

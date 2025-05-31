@@ -1,0 +1,107 @@
+[gd_scene load_steps=9 format=3 uid="uid://dugqphw3828hb"]
+
+[ext_resource type="Texture2D" uid="uid://c1o7p7sfx7xl4" path="res://Assets/Sprites/580b585b2edbce24c47b2639.png" id="1_3jqk3"]
+[ext_resource type="Texture2D" uid="uid://bhox3muya5qhf" path="res://Assets/Sprites/special-3d-rendering-smooth-clouds-flowing-shapes-isolated-transparent-backgrounds-png.png" id="2_5bnef"]
+
+[sub_resource type="Animation" id="Animation_lquwl"]
+resource_name = "Animation"
+length = 6.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 6),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(201, -468), Vector2(178, 889)]
+}
+
+[sub_resource type="Animation" id="Animation_7mycd"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(178, 889)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_272bh"]
+_data = {
+&"Animation": SubResource("Animation_lquwl"),
+&"RESET": SubResource("Animation_7mycd")
+}
+
+[sub_resource type="Animation" id="Animation_272bh"]
+resource_name = "Animation"
+length = 12.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 12),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(606, -461), Vector2(645, 879)]
+}
+
+[sub_resource type="Animation" id="Animation_5vw27"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(645, 879)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_kek77"]
+_data = {
+&"Animation": SubResource("Animation_272bh"),
+&"RESET": SubResource("Animation_5vw27")
+}
+
+[node name="Nubes" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(178, 889)
+scale = Vector2(0.0745643, 0.0973035)
+texture = ExtResource("1_3jqk3")
+region_enabled = true
+region_rect = Rect2(1.75, -1.3, 1987.88, 1289.25)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Sprite2D"]
+libraries = {
+&"": SubResource("AnimationLibrary_272bh")
+}
+autoplay = "Animation"
+
+[node name="Sprite2D2" type="Sprite2D" parent="."]
+position = Vector2(645, 879)
+rotation = 0.0353105
+scale = Vector2(0.318016, 0.35799)
+texture = ExtResource("2_5bnef")
+region_enabled = true
+region_rect = Rect2(0, 0, 414, 198.333)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Sprite2D2"]
+libraries = {
+&"": SubResource("AnimationLibrary_kek77")
+}
+autoplay = "Animation"

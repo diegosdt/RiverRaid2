@@ -1,0 +1,68 @@
+[gd_scene load_steps=7 format=3 uid="uid://c01p6en8ouw"]
+
+[ext_resource type="Script" uid="uid://cr3iah5kh67p1" path="res://Scripts/oil.gd" id="1_krsem"]
+[ext_resource type="Texture2D" uid="uid://ddk37d3jx4enl" path="res://Assets/Sprites/style/oir.png" id="1_lsde5"]
+
+[sub_resource type="Animation" id="Animation_ccyj6"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 550)]
+}
+
+[sub_resource type="Animation" id="Animation_krsem"]
+resource_name = "new_animation"
+length = 3.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, 550)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_w5vfk"]
+_data = {
+&"RESET": SubResource("Animation_ccyj6"),
+&"new_animation": SubResource("Animation_krsem")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xi6bs"]
+size = Vector2(700.699, 1092.49)
+
+[node name="oil" type="Node2D"]
+script = ExtResource("1_krsem")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, 550)
+scale = Vector2(0.0481792, 0.042224)
+texture = ExtResource("1_lsde5")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Sprite2D"]
+libraries = {
+&"": SubResource("AnimationLibrary_w5vfk")
+}
+autoplay = "new_animation"
+
+[node name="Area2D" type="Area2D" parent="Sprite2D"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D/Area2D"]
+position = Vector2(1.6706e-05, 0)
+scale = Vector2(1.10035, 1.02235)
+shape = SubResource("RectangleShape2D_xi6bs")
+
+[connection signal="animation_finished" from="Sprite2D/AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
+[connection signal="area_entered" from="Sprite2D/Area2D" to="." method="_on_area_2d_area_entered"]
